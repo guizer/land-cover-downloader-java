@@ -1,11 +1,6 @@
 package com.github.guizer.landcover_downloader_java;
 
-/** Represents an url and its arguments.
- * @author Doug Lowe
- * @author www.LoweWriter.com
- * @version 1.5
- * @since 1.0
- */
+
 public class Url {
 
     /* latitude of the center of the map */
