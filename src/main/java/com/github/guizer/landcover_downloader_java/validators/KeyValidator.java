@@ -4,6 +4,10 @@ import com.beust.jcommander.IParameterValidator;
 import com.beust.jcommander.ParameterException;
 
 
+/**
+ * Checks that the API key parsed from the command line arguments is not empty.
+ *
+ */
 public class KeyValidator implements IParameterValidator {
 
     @Override

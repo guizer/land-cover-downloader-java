@@ -3,7 +3,10 @@ package com.github.guizer.landcover_downloader_java.validators;
 import com.beust.jcommander.IParameterValidator;
 import com.beust.jcommander.ParameterException;
 
-
+/**
+ * Checks the validity of the latitude parsed from the command line arguments.
+ *
+ */
 public class LatitudeValidator implements IParameterValidator {
 
     @Override

@@ -5,7 +5,11 @@ import com.beust.jcommander.ParameterException;
 
 import java.util.Arrays;
 
-
+/**
+ * Checks that the map type parsed from the command line arguments is supported.
+ * Supported map types are roadmap, satellite, terrain and hybrid.
+ *
+ */
 public class MapTypeValidator implements IParameterValidator
 {
 

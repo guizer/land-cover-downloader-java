@@ -1,7 +1,10 @@
 package com.github.guizer.landcover_downloader_java;
 
-/**
- *
+/** Represents an url and its arguments.
+ * @author Doug Lowe
+ * @author www.LoweWriter.com
+ * @version 1.5
+ * @since 1.0
  */
 public class Url {
 
@@ -113,30 +116,32 @@ public class Url {
         return url;
     }
 
+    /**
+     * Class used to build Url objects
+     */
     public static class UrlBuilder {
 
         private Url url;
-
         private final float latitude;
-
         private final float longitude;
-
         private final int zoom;
-
         private final int width;
-
         private final int height;
-
         private final String key;
-
         private int scale;
-
         private String format;
-
         private String mapType;
-
         private String signature;
 
+        /**
+         *
+         * @param latitude
+         * @param longitude
+         * @param zoom
+         * @param width
+         * @param height
+         * @param key
+         */
         public UrlBuilder(float latitude, float longitude, int zoom, int width, int height, String key) {
             this.latitude = latitude;
             this.longitude = longitude;
@@ -149,7 +154,7 @@ public class Url {
         /**
          *
          * @param scale
-         * @return
+         * @return this url builder with its scale modified
          */
         public UrlBuilder withScale(int scale) {
             this.scale = scale;
@@ -158,8 +163,8 @@ public class Url {
 
         /**
          *
-         * @param format
-         * @return
+         * @param format format of the image
+         * @return this url builder with its format modified
          */
         public UrlBuilder withFormat(String format) {
             this.format = format;
@@ -169,7 +174,7 @@ public class Url {
         /**
          *
          * @param mapType
-         * @return
+         * @return this url builder with its map type modified
          */
         public UrlBuilder withMapType(String mapType) {
             this.mapType = mapType;
@@ -179,7 +184,7 @@ public class Url {
         /**
          *
          * @param signature
-         * @return
+         * @return this url builder with its signature modified
          */
         public UrlBuilder withSignature(String signature) {
             this.signature = signature;

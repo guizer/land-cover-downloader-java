@@ -4,6 +4,11 @@ import com.beust.jcommander.IParameterValidator;
 import com.beust.jcommander.ParameterException;
 
 
+/**
+ * Checks that the width and the height parsed from the command line arguments
+ * are within the supported interval.
+ *
+ */
 public class DimensionValidator implements IParameterValidator {
 
     public static final int MAX = 10000;

@@ -3,66 +3,24 @@ package com.github.guizer.landcover_downloader_java;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+
+import static com.github.guizer.landcover_downloader_java.Utils.*;
 
 
-/**
- * Land Cover Downloader
- *
- */
+
 public class App {
+
     private JCommander commander;
 
     public static final int TILE_SIZE = 500;
 
     public static final float RADIUS = 6371008;
 
-    /**
-     *
-     * @param latitude
-     * @param zoom
-     * @return
-     */
-    public float metersPerPixel(float latitude, int zoom) {
-        return (float) (156543.033928 * Math.cos(latitude * Math.PI/180.) / Math.pow(2, zoom));
-    }
 
     /**
-     *
-     * @param url
-     * @return
-     * @throws IOException
-     */
-    public static BufferedImage download(String url) throws IOException {
-        try {
-            BufferedInputStream in = new BufferedInputStream(new URL(url).openStream());
-            return ImageIO.read(in);
-        } catch (IOException e) {
-            throw e;
-        }
-    }
-
-    /**
-     *
-     * @param image
-     * @param path
-     * @throws IOException
-     */
-    public static void write(BufferedImage image, String path) throws IOException {
-        try {
-            File file = new File(path);
-            ImageIO.write(image, "png", file);
-        } catch(IOException e) {
-            throw e;
-        }
-    }
-
-    /**
+     * Run the app.
      *
      * @param args
      */
@@ -70,32 +28,25 @@ public class App {
 
         Arguments arguments = new Arguments();
 
-        // parse and validate the command line arguments
         commander = JCommander.newBuilder()
                 .addObject(arguments)
                 .build();
 
+        // parse and validate the command line arguments
         try {
             commander.parse(args);
         } catch (ParameterException e) {
-
-            // display the error
-            e.printStackTrace();
-
-            // display the help
-            commander.usage();
-
-            // quit
-            return;
+            e.printStackTrace();      // display the error
+            commander.usage();        // display the help
+            return;                   // quit
         }
 
-        // check if the help is requested
+        // check if the help is requested by the user
         if (arguments.isHelp()) {
-
             commander.usage();
-
             return;
         }
+
 
         String key = arguments.getKey();
 
@@ -115,7 +66,7 @@ public class App {
         // number of tiles to download
         int n = nx*ny;
 
-        // store tha cooridnates of the center of the tiles in arrays
+        // store tha coordinates of the center of the tiles in arrays
         float[][] lats = new float[ny][nx];
         float[][] lons = new float[ny][nx];
 
@@ -159,6 +110,7 @@ public class App {
                 lats[i][j] = lat - (float) (180./Math.PI * dLat);
                 lons[i][j] = lon + (float) (180./Math.PI * dLon);
 
+                // build the url of the tile
                 String url = new Url.UrlBuilder(lats[i][j], lons[i][j], zoom, TILE_SIZE, TILE_SIZE, key)
                         .withFormat(arguments.getFormat())
                         .withMapType(arguments.getMapType())
@@ -170,13 +122,14 @@ public class App {
 
                 count++;
 
-                System.out.println("Downloading tile " + count + "/" + n + ", position=(" + i + "," + j + "), lat=" + lats[i][j] + ", lon=" + lons[i][j]);
+                System.out.println("Downloading tile " + count + "/" + n + ", position=(" + i + "," + j + "), " +
+                        "lat=" + lats[i][j] + ", lon=" + lons[i][j]);
 
                 // download the tile
                 try {
-                    BufferedImage tile = download(url);
+                    BufferedImage tile = downloadImage(url);
 
-                    // replace the pixel of the big image with the ones of the tile
+                    // replace the pixels of the big image with the ones of the tile
                     for(int k = 0; k<TILE_SIZE*scale; k++) {
                         for(int l = 0; l<TILE_SIZE*scale; l++) {
                             // update the pixeks
@@ -193,18 +146,10 @@ public class App {
         // Save the image
         try {
             System.out.println("Saving the merged image to " + arguments.getOutput());
-            write(image, arguments.getOutput());
+            writeImage(image, arguments.getOutput(), arguments.getFormat());
         } catch (IOException e) {
             e.printStackTrace();
             return;
         }
-    }
-
-    public static void main( String[] args )
-    {
-        App app = new App();
-
-        // run the app
-        app.run(args);
     }
 }

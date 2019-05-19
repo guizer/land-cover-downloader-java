@@ -5,7 +5,11 @@ import com.beust.jcommander.ParameterException;
 
 import java.util.Arrays;
 
-
+/**
+ * Checks that the image format parsed from the command line arguments is supported.
+ * Supported format are png and jpg.
+ *
+ */
 public class FormatValidator implements IParameterValidator
 {
     public static final String[] VALID_FORMATS = {"png","jpg"};

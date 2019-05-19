@@ -4,6 +4,11 @@ import com.beust.jcommander.IParameterValidator;
 import com.beust.jcommander.ParameterException;
 
 
+/**
+ * Checks that the scale parsed from the command line arguments is valid.
+ * Valid values are 1, 2 and 4 if the account associated to the API key is premium.
+ *
+ */
 public class ScaleValidator implements IParameterValidator
 {
 

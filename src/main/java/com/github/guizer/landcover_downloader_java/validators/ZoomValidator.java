@@ -3,7 +3,11 @@ package com.github.guizer.landcover_downloader_java.validators;
 import com.beust.jcommander.IParameterValidator;
 import com.beust.jcommander.ParameterException;
 
-
+/**
+ * Checks that the zoom level parsed from the command line arguments is valid.
+ * Valid values are integers between 1 and 20.
+ *
+ */
 public class ZoomValidator implements IParameterValidator {
 
     public static final int MAX = 20;
